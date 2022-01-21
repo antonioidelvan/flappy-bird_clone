@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
+    public Text scoreView;
+    public Transform gameOver;
+    public Transform play;
 
     [SerializeField]
     int impulso;
@@ -30,11 +34,19 @@ public class Player : MonoBehaviour
     {
         if(collision.CompareTag("AddScore")){
             score++;
+            scoreView.text = score.ToString();
         }
 
         if (collision.CompareTag("Pipe"))
         {
             enabled = false;
+            gameOver.gameObject.SetActive(true);
+            Invoke("Pause", 2);
         }
+    }
+
+    void Pause()
+    {
+        Time.timeScale = 0;
     }
 }
